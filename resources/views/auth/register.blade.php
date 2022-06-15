@@ -1,5 +1,17 @@
 <x-guest-layout>
     <x-auth-card>
+        <script>
+            function checkEmail(input) {
+                const emailFail = document.querySelector('#invalidEmail');
+                if(emailFail !== null) emailFail.remove();
+                if(input.includes('@') && input.includes('.', input.length - 4) && !input.includes(' ')) return;
+                const emailDiv = document.querySelector('#emailDiv');
+                const emailFailDiv = document.createElement('div');
+                emailFailDiv.setAttribute('id', 'invalidEmail')
+                emailFailDiv.innerHTML = '<p class="block font-medium text-sm text-red-600">Please enter a valid Email address.</p>'
+                emailDiv.appendChild(emailFailDiv);
+            }
+        </script>
         <x-slot name="logo">
             <a href="/">
                 <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
@@ -20,10 +32,11 @@
             </div>
 
             <!-- Email Address -->
-            <div class="mt-4">
+            <div id="emailDiv" class="mt-4">
                 <x-label for="email" :value="__('Email')" />
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" title="Please enter a valid email address"></x-input>
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" onchange="checkEmail(this.value)" required title="Please enter a valid email address"></x-input>
+{{--                <p id="invalidEmail" class="block font-medium text-sm text-red-600">Please enter a valid Email address.</p>--}}
             </div>
 
             <!-- Password -->
@@ -60,3 +73,4 @@
         </form>
     </x-auth-card>
 </x-guest-layout>
+
