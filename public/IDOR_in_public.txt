@@ -1,0 +1,1 @@
+This will show that IDOR attacks only work in Laravels public folder.

@@ -7,6 +7,19 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Security
+
+### Assignment 3
+#### Snooping and session hijacking
+Snooping and session hijacking is impossible to completely prevent, but for maximal security this application will create a new session id at each login and will delete the old session id at each logout. So if the session was successfully hijacked, once the user logs out, the access to the hijacked session ends. This is done in the ***AuthenticatedSessionController.php*** that can be found in ***app/Http/Controllers/auth/AuthenticatedSessionController.php***.
+
+There the ***store*** and ***destroy*** methods handle the session ids at every log in / out. 
+
+#### IDOR attacks
+Insecure direct object references (IDOR) is a way to obtain access to private data with user supplied inputs. In Laravel the hosting root is the ***/public*** directory, which contains an index.php file and some other files that have to be publicly accessible, like JS and CSS files for example. All requests are going through Laravels index.php file to the router *web.php* pointing to Controllers or returning the blades directly. This technique prevent IDOR attacks, which I want to demonstrate with the follwoing example:
+
+This application has two files, from which one is stored inside the */public* directory and another one in the root directory. When we now try to access the file in the */public* folder by adding ***/IDOR_in_public.txt*** to our URL, we will see the text rendered in our browser. However, when we now try to reach the ***/IDOR.txt*** file in the root directory, Laravel will simply respond with a 404 error since the route is not defined in the router.
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
