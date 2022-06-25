@@ -5,7 +5,7 @@
                 const emailFail = document.querySelector('#invalidEmail');
                 if(emailFail !== null) emailFail.remove();
                 if(input.includes('@') && input.includes('.', input.length - 4) && !input.includes(' ')) return;
-                const emailDiv = document.querySelector('#emailDiv');
+    const emailDiv = document.querySelector('#emailDiv');
                 const emailFailDiv = document.createElement('div');
                 emailFailDiv.setAttribute('id', 'invalidEmail')
                 emailFailDiv.innerHTML = '<p class="block font-medium text-sm text-red-600">Please enter a valid Email address.</p>'
