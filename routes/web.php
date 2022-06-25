@@ -17,10 +17,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
 require __DIR__.'/auth.php';
 
 Auth::routes();
@@ -30,6 +26,12 @@ Route::get('/complete-registration', [App\Http\Controllers\Auth\RegisterControll
 
 Route::middleware(['2fa'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'],)->name('home');
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware(['auth'])->name('dashboard');
+    Route::get('/test', function () {
+        return view('test');
+    })->name('test')->middleware('auth');
     Route::post('/2fa', function () {
         return redirect(route('home'));
     })->name('2fa');
